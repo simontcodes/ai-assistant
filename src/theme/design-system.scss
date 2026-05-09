@@ -1,0 +1,75 @@
+:root {
+  --app-bg: #f6f3ef;
+  --app-surface: #ffffff;
+  --app-surface-soft: #f8f9fc;
+  --app-surface-muted: #f1f3f8;
+  --app-text: #24334d;
+  --app-text-muted: #7f8da6;
+  --app-text-subtle: #a5afc0;
+  --app-border: #e7ecf4;
+  --app-accent: #ff620a;
+  --app-accent-soft: #fff0e7;
+  --app-success: #2f9e72;
+  --app-warning: #f4a23a;
+  --app-shadow-card: 0 18px 42px rgba(34, 55, 90, 0.08);
+  --app-shadow-soft: 0 10px 26px rgba(34, 55, 90, 0.05);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --font-display: "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-body: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.screen-shell {
+  --background: var(--app-bg);
+}
+
+.app-page {
+  padding: var(--space-5) var(--space-4) calc(140px + env(safe-area-inset-bottom, 0px));
+}
+
+.page-label {
+  margin: 0 0 var(--space-2);
+  color: var(--app-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 40px;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.soft-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--app-shadow-card);
+}
+
+.fixed-stack {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 0 var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(246, 243, 239, 0) 0%, rgba(246, 243, 239, 0.94) 32%, rgba(246, 243, 239, 1) 100%);
+}

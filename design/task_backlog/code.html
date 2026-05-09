@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Task Backlog</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-sans text-background-dark">
+<!-- Main Container -->
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light overflow-x-hidden pb-24">
+<!-- Header Section -->
+<div class="flex items-center bg-white p-4 justify-between border-b border-gray-100 sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<div class="text-background-dark flex size-10 items-center justify-center rounded-full hover:bg-gray-100 transition-colors" data-icon="ArrowLeft">
+<span class="material-symbols-outlined">arrow_left</span>
+</div>
+<h2 class="text-background-dark text-xl font-bold leading-tight tracking-[-0.015em]">Task Backlog</h2>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-gray-50 text-background-dark hover:bg-gray-100 transition-colors">
+<div data-icon="MagnifyingGlass">
+<span class="material-symbols-outlined">magnification_large</span>
+</div>
+</button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 p-4 overflow-x-auto no-scrollbar">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-primary px-4 text-white shadow-sm transition-all active:scale-95">
+<p class="text-sm font-semibold">All</p>
+<div data-icon="CaretDown">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-white border border-gray-200 px-4 text-background-dark shadow-sm hover:bg-gray-50 transition-all">
+<p class="text-sm font-medium">High Priority</p>
+<div data-icon="CaretDown">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-white border border-gray-200 px-4 text-background-dark shadow-sm hover:bg-gray-50 transition-all">
+<p class="text-sm font-medium">Remote</p>
+<div data-icon="CaretDown">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</div>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-white border border-gray-200 px-4 text-background-dark shadow-sm hover:bg-gray-50 transition-all">
+<p class="text-sm font-medium">Today</p>
+<div data-icon="CaretDown">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</div>
+</button>
+</div>
+<!-- Task List Content -->
+<div class="flex flex-col gap-4 p-4">
+<!-- Task Card 1 -->
+<div class="group flex flex-col items-stretch justify-start rounded-xl shadow-sm bg-white border border-gray-100 hover:shadow-md transition-shadow">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-t-xl" data-alt="A clean, minimalist home office setup viewed from above. The scene features a sleek wooden desk with a high-end laptop, a steaming cup of artisan coffee, and a single green succulent plant. Natural soft morning light streams in from a window, creating a focused and productive atmosphere. The color palette is dominated by soft whites, warm wood tones, and subtle orange accents that match the primary brand identity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCF0VeAsiPsWFDu950WUYbAyBbNNfs9HJxVNVlLuzeV8vBENLdeezE2VowQ_WBY1YdANLm24QA6Qna3FWjEitKAoc6Z31bgzaLEvQDV6woIA7sOg-fLbCXEwHhUtoBueiaTHNc1bun4xcOLcw998i9JYfVFNyXeYCFgtBmrLFrG-a4rp84qCyN9kXs3kTnTFtg1VSmpCHgsmd5u03a0kvW106zzILmqcQMsjaEJmzAZtXBEl-TRK6_UUi3pfYW-p3NP75nWpWA1iUJ2')">
+</div>
+<div class="flex w-full flex-col items-stretch justify-center gap-2 p-4">
+<div class="flex justify-between items-start">
+<p class="text-background-dark text-lg font-bold leading-tight tracking-[-0.015em]">Finalize Project Proposal</p>
+<span class="bg-orange-100 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">High</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2 text-gray-500">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<p class="text-sm font-medium">30m • Remote</p>
+</div>
+<div class="flex items-center gap-2 text-gray-500">
+<span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+<p class="text-sm font-medium">Best time: Morning</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Card 2 -->
+<div class="group flex flex-col items-stretch justify-start rounded-xl shadow-sm bg-white border border-gray-100 hover:shadow-md transition-shadow">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-t-xl" data-alt="A vibrant and organized grocery store produce section featuring rows of fresh, colorful vegetables and fruits. The lighting is bright and cheerful, emphasizing the healthy and organic quality of the items. The composition is modern and wide-angled, showcasing a clean, high-end shopping environment. Soft shadows and a clean aesthetic maintain the light-mode UI consistency, with small pops of vibrant orange in the signage to tie back to the brand." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjAVYS0iwZoFTPF9DmxBUm2d6dWb9RbMNVKlwsdnB3Ej4BY-fJN2QkkLjn4_tkxA8Rfri3W8NqeZBqtff2JyS_vdPW7Q-zoRMMVdV_iHxjS9vyuNdy7yu4dfn7FJ1y4ETFlTQJBZqcJp0NZvRW15uMDV4Zg3cTldFvS_FoVQPOa3efFbdThja9JYNpg5iztzz5E465jWTI9RKydZ_7g1RaDat6OAi8hVgolPV3ZL0Pz7y0W8tEpMmncBuoOkkOHex5a4SyIm1YgIoH')">
+</div>
+<div class="flex w-full flex-col items-stretch justify-center gap-2 p-4">
+<div class="flex justify-between items-start">
+<p class="text-background-dark text-lg font-bold leading-tight tracking-[-0.015em]">Grocery Shopping</p>
+<span class="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Medium</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2 text-gray-500">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<p class="text-sm font-medium">45m • On-site</p>
+</div>
+<div class="flex items-center gap-2 text-gray-500">
+<span class="material-symbols-outlined text-[18px]">light_mode</span>
+<p class="text-sm font-medium">Best time: Afternoon</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Card 3 -->
+<div class="group flex flex-col items-stretch justify-start rounded-xl shadow-sm bg-white border border-gray-100 hover:shadow-md transition-shadow">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-t-xl" data-alt="A serene yoga studio interior with polished light wood floors and large windows showing a lush green park outside. The space is flooded with soft, warm golden hour sunlight, creating a calm and peaceful mood. A single yoga mat is rolled out in the center of the room. The aesthetic is extremely clean and minimalist, utilizing a light color palette of creams and soft greys, perfectly aligned with a premium modern wellness application." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBU7ywMuctLuRAykz4ONbclBmVHdyWa6PNPzdX9lQ-jEPNjSoB5GRCaa0Zm3z6b5HL3gXtYsyKAtfCOaHh6NaPfPCYQqRUM3e5rfMbRyGCNPWCvRxMMmnhGMx2W7hjKxlHLgUwZDXLVXoTxDdtb8SERb1YvQQhkytwoyei-EI1q8Ti4NuvjUxdlSALUwj_hjfvWRGzg8OzsfaPzdob1eH2JJqhP_1PspoKK6zID0Ef8W-V7-_SbPbEgz4y-ev_w-5oLtEx9oAa0kG8e')">
+</div>
+<div class="flex w-full flex-col items-stretch justify-center gap-2 p-4">
+<div class="flex justify-between items-start">
+<p class="text-background-dark text-lg font-bold leading-tight tracking-[-0.015em]">Daily Yoga Session</p>
+<span class="bg-blue-50 text-blue-500 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Routine</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2 text-gray-500">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<p class="text-sm font-medium">20m • Home</p>
+</div>
+<div class="flex items-center gap-2 text-gray-500">
+<span class="material-symbols-outlined text-[18px]">bedtime</span>
+<p class="text-sm font-medium">Best time: Evening</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Shared BottomNavBar Component -->
+<div class="fixed bottom-0 left-0 right-0 z-50">
+<div class="flex gap-2 border-t border-[#472724] bg-[#321c1a] px-4 pb-3 pt-2">
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-white" href="#">
+<div class="text-white flex h-8 items-center justify-center" data-icon="ListChecks" data-size="24px" data-weight="fill">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lists</span>
+</div>
+<p class="text-white text-xs font-medium leading-normal tracking-[0.015em]">Tasks</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#c89893]" href="#">
+<div class="text-[#c89893] flex h-8 items-center justify-center" data-icon="CalendarBlank" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">calendar_auto</span>
+</div>
+<p class="text-[#c89893] text-xs font-medium leading-normal tracking-[0.015em]">Calendar</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#c89893]" href="#">
+<div class="text-[#c89893] flex h-8 items-center justify-center" data-icon="Timer" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<p class="text-[#c89893] text-xs font-medium leading-normal tracking-[0.015em]">Focus</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#c89893]" href="#">
+<div class="text-[#c89893] flex h-8 items-center justify-center" data-icon="UserCircle" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+<p class="text-[#c89893] text-xs font-medium leading-normal tracking-[0.015em]">Profile</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Preference Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f6f6;
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light text-slate-900 min-h-screen flex flex-col">
+<!-- Minimal Header (Back-to-Main Exception for Focused Views or Custom Nav) -->
+<header class="flex items-center px-4 py-4 bg-white border-b border-slate-200">
+<button class="p-2 -ml-2 rounded-full hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-slate-700">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-semibold tracking-tight mr-8 text-slate-900">Settings</h1>
+</header>
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Section: Profile/Header -->
+<div class="px-4 py-8 flex flex-col items-center">
+<div class="size-24 rounded-full overflow-hidden bg-slate-200 mb-4 border-2 border-white shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly individual in a modern, light-filled office environment. The lighting is soft and natural, emphasizing a bright and welcoming atmosphere. The color palette is composed of soft neutrals and warm wood tones, consistent with a clean, high-end professional aesthetic. The focus is sharp on the subject, with a shallow depth of field blurring the sophisticated architectural background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr71H_7jT-d5wCUmCxk8iVNHJVNkp4P389i7vTHeB3zMUsE0uEkud5HtAW77HKjwTdMYvEx8i-kpbQC_ncCkpercMZNXtIWWDSwLsE2Po_wkG-NABS9mpbNT_kmMZE6VghUvA0AT-PNFjMuR6I6DA_1BqDE5o58OnRFCtaL_He20koXq8MOmv99zPX0T7SyO6Ihbm1W0u_e6V3QPFhLxHo39T7Vxmr_QEs8n9i2h9SPJvHtFAYsBMPprAG1XfGw-jkEppskK-fPXX8"/>
+</div>
+<h2 class="text-xl font-bold text-slate-900">Alex Rivers</h2>
+<p class="text-sm text-slate-500 font-medium uppercase tracking-wider">Productivity Enthusiast</p>
+</div>
+<!-- Section: Schedule & Locations -->
+<div class="mb-6">
+<h3 class="px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">Schedule &amp; Locations</h3>
+<div class="bg-white border-y border-slate-100">
+<div class="flex items-center justify-between px-4 py-4 border-b border-slate-50 transition-colors hover:bg-slate-50 cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">schedule</span>
+<span class="text-base font-medium text-slate-700">Work hours</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-sm font-semibold text-primary">9:00 AM - 5:00 PM</span>
+<span class="material-symbols-outlined text-slate-300 text-sm">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-4 py-4 border-b border-slate-50 transition-colors hover:bg-slate-50 cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">home</span>
+<span class="text-base font-medium text-slate-700">Home location</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-sm font-normal text-slate-500">123 Maple Avenue...</span>
+<span class="material-symbols-outlined text-slate-300 text-sm">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-4 py-4 transition-colors hover:bg-slate-50 cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">work</span>
+<span class="text-base font-medium text-slate-700">Work location</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-sm font-normal text-slate-500">Innovation Plaza, Bldg 4</span>
+<span class="material-symbols-outlined text-slate-300 text-sm">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Preferences -->
+<div class="mb-6">
+<h3 class="px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">Task Management</h3>
+<div class="bg-white border-y border-slate-100">
+<div class="flex items-center justify-between px-4 py-4 border-b border-slate-50">
+<div class="flex flex-col gap-0.5">
+<span class="text-base font-medium text-slate-700">Allow personal tasks during work</span>
+<span class="text-xs text-slate-400">Schedule low-effort errands during gaps</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between px-4 py-4 transition-colors hover:bg-slate-50 cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">hourglass_empty</span>
+<span class="text-base font-medium text-slate-700">Minimum useful gap duration</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-sm font-semibold text-slate-900">15 mins</span>
+<span class="material-symbols-outlined text-slate-300 text-sm">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: AI Assistant -->
+<div class="mb-10">
+<h3 class="px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">Assistant</h3>
+<div class="bg-white border-y border-slate-100">
+<div class="flex items-center justify-between px-4 py-5 transition-colors hover:bg-slate-50 cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-semibold text-slate-900">Assistant personality</span>
+<span class="text-sm text-slate-500">Encouraging &amp; Direct</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Sign Out -->
+<div class="px-4">
+<button class="w-full py-4 text-sm font-bold text-red-500 bg-white border border-red-100 rounded-lg hover:bg-red-50 transition-colors">
+                Sign Out
+            </button>
+</div>
+</main>
+<!-- Shared Bottom Navigation Bar (Immutable Component Structure) -->
+<nav class="fixed bottom-0 left-0 right-0 z-50">
+<div class="flex gap-2 border-t border-[#304724] bg-[#22321a] px-4 pb-3 pt-2">
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#a5c893]" href="#">
+<div class="text-[#a5c893] flex h-8 items-center justify-center" data-icon="House" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">house</span>
+</div>
+<p class="text-[#a5c893] text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#a5c893]" href="#">
+<div class="text-[#a5c893] flex h-8 items-center justify-center" data-icon="List" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">list</span>
+</div>
+<p class="text-[#a5c893] text-xs font-medium leading-normal tracking-[0.015em]">Tasks</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#a5c893]" href="#">
+<div class="text-[#a5c893] flex h-8 items-center justify-center" data-icon="Calendar" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<p class="text-[#a5c893] text-xs font-medium leading-normal tracking-[0.015em]">Calendar</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-white" href="#">
+<div class="text-white flex h-8 items-center justify-center" data-icon="Gear" data-size="24px" data-weight="fill">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search_gear</span>
+</div>
+<p class="text-white text-xs font-medium leading-normal tracking-[0.015em]">Settings</p>
+</a>
+</div>
+</nav>
+</body></html>

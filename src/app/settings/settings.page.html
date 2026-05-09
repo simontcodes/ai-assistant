@@ -1,0 +1,81 @@
+<ion-content [fullscreen]="true" class="screen-shell">
+  <div class="app-page settings-page">
+    <header class="settings-topbar">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+      <h1>Settings</h1>
+      <span></span>
+    </header>
+
+    <section class="profile-block">
+      <app-assistant-avatar name="Alex Rivers" state="idle"></app-assistant-avatar>
+      <h2>Alex Rivers</h2>
+      <p>Productivity Enthusiast</p>
+    </section>
+
+    <section class="settings-group">
+      <p class="group-label">Schedule & Locations</p>
+      <article class="setting-row soft-card">
+        <div>
+          <h3>Work hours</h3>
+          <p>{{ preferences.workDayStart }} - {{ preferences.workDayEnd }}</p>
+        </div>
+        <div class="inline-inputs">
+          <ion-input [(ngModel)]="preferences.workDayStart" type="time"></ion-input>
+          <ion-input [(ngModel)]="preferences.workDayEnd" type="time"></ion-input>
+        </div>
+      </article>
+
+      <article class="setting-row soft-card">
+        <div>
+          <h3>Home location</h3>
+          <p>{{ preferences.homeLocationName }}</p>
+        </div>
+        <ion-input [(ngModel)]="preferences.homeLocationName"></ion-input>
+      </article>
+
+      <article class="setting-row soft-card">
+        <div>
+          <h3>Work location</h3>
+          <p>{{ preferences.workLocationName }}</p>
+        </div>
+        <ion-input [(ngModel)]="preferences.workLocationName"></ion-input>
+      </article>
+    </section>
+
+    <section class="settings-group">
+      <p class="group-label">Task Management</p>
+      <article class="setting-row soft-card">
+        <div>
+          <h3>Allow personal tasks during work</h3>
+          <p>Schedule low-effort errands during gaps</p>
+        </div>
+        <ion-toggle [(ngModel)]="preferences.allowPersonalTasksDuringWork"></ion-toggle>
+      </article>
+
+      <article class="setting-row soft-card">
+        <div>
+          <h3>Minimum useful gap duration</h3>
+          <p>{{ preferences.minimumUsefulGapMinutes }} mins</p>
+        </div>
+        <ion-input [(ngModel)]="preferences.minimumUsefulGapMinutes" type="number"></ion-input>
+      </article>
+    </section>
+
+    <section class="settings-group">
+      <p class="group-label">Assistant</p>
+      <article class="setting-row soft-card">
+        <div>
+          <h3>Assistant personality</h3>
+          <p>Calm & Direct</p>
+        </div>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </article>
+    </section>
+
+    <button type="button" class="save-button" (click)="save()">Save changes</button>
+  </div>
+
+  <div class="fixed-stack">
+    <app-bottom-tabs></app-bottom-tabs>
+  </div>
+</ion-content>

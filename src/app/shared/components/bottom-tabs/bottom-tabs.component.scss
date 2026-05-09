@@ -1,0 +1,26 @@
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 28px;
+}
+
+.tab {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 10px 8px;
+  color: var(--app-text-subtle);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tab ion-icon {
+  font-size: 22px;
+}
+
+.tab--active {
+  color: var(--app-accent);
+}

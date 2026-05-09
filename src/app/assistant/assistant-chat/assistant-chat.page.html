@@ -1,0 +1,58 @@
+<ion-content [fullscreen]="true" class="screen-shell">
+  <div class="app-page assistant-page">
+    <header class="topbar">
+      <ion-button fill="clear" color="dark">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <div class="topbar-center">
+        <app-assistant-avatar [name]="assistantProfile.name" [state]="avatarState" size="sm"></app-assistant-avatar>
+        <span>AI Assistant</span>
+      </div>
+      <ion-button fill="clear" color="dark">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </header>
+
+    <section class="character-stage soft-card">
+      <div class="stage-copy">
+        <p class="page-label">Assistant</p>
+        <h1 class="page-title">{{ assistantProfile.name }}</h1>
+        <p>Calm, practical help for the next realistic step in your day.</p>
+      </div>
+      <app-assistant-avatar [name]="assistantProfile.name" [state]="avatarState"></app-assistant-avatar>
+    </section>
+
+    <div class="prompt-row">
+      <button type="button" class="prompt-chip" (click)="usePrompt('I need to pay my credit card bill')">Add task</button>
+      <button type="button" class="prompt-chip" (click)="usePrompt('What can I do now?')">What fits now?</button>
+    </div>
+
+    <section class="message-list">
+      <app-chat-message
+        *ngFor="let message of messages"
+        [message]="message"
+        (suggestionAction)="handleSuggestionAction($event)"
+      ></app-chat-message>
+    </section>
+  </div>
+
+  <div class="fixed-stack">
+    <section class="composer soft-card">
+      <button type="button" class="composer-icon">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </button>
+      <ion-textarea
+        [(ngModel)]="draftMessage"
+        auto-grow="true"
+        placeholder="Type your message..."
+      ></ion-textarea>
+      <button type="button" class="composer-icon">
+        <ion-icon name="mic-outline"></ion-icon>
+      </button>
+      <button type="button" class="send-btn" (click)="sendMessage()" [disabled]="!draftMessage.trim() || isSending">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </section>
+    <app-bottom-tabs></app-bottom-tabs>
+  </div>
+</ion-content>

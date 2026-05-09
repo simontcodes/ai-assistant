@@ -1,0 +1,26 @@
+<article class="suggestion-card soft-card">
+  <div class="suggestion-card__icon">
+    <ion-icon name="calendar-outline"></ion-icon>
+  </div>
+  <div class="suggestion-card__content">
+    <div class="suggestion-card__topline">
+      <span>Option {{ rank }}</span>
+      <span>Score {{ suggestion.score }}</span>
+    </div>
+    <h3>{{ suggestion.title }}</h3>
+    <p>{{ suggestion.reason }}</p>
+    <div class="suggestion-card__meta">
+      <span>{{ suggestion.totalRequiredMinutes }} min total</span>
+      <span *ngIf="suggestion.travelTimeMinutes">{{ suggestion.travelTimeMinutes * 2 }} min travel</span>
+    </div>
+    <div class="suggestion-card__actions">
+      <button type="button" class="cta" (click)="onAction('do-now')" [disabled]="suggestion.state === 'done'">
+        {{ suggestion.state === 'accepted' ? 'In Focus' : 'Do This' }}
+      </button>
+      <button type="button" class="ghost ghost--success" (click)="onAction('done')">Done</button>
+      <button type="button" class="ghost" (click)="onAction('later')" [disabled]="suggestion.state === 'done'">
+        {{ suggestion.state === 'deferred' ? 'Deferred' : 'Later' }}
+      </button>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,79 @@
+.suggestion-card {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 14px;
+  padding: 16px;
+}
+
+.suggestion-card__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: #f4f8ff;
+  color: #5e8ff8;
+  font-size: 22px;
+}
+
+.suggestion-card__topline,
+.suggestion-card__meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--app-text-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.suggestion-card__content h3 {
+  margin: 6px 0 8px;
+  color: var(--app-text);
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.suggestion-card__content p {
+  margin: 0;
+  color: var(--app-text-muted);
+  line-height: 1.45;
+}
+
+.suggestion-card__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.cta,
+.ghost {
+  border: 0;
+  border-radius: 14px;
+  height: 42px;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 700;
+}
+
+.cta:disabled,
+.ghost:disabled {
+  opacity: 0.6;
+}
+
+.cta {
+  background: var(--app-accent);
+  color: #fff;
+}
+
+.ghost {
+  background: #fff;
+  color: var(--app-text-muted);
+  border: 1px solid var(--app-border);
+}
+
+.ghost--success {
+  color: var(--app-success);
+  border-color: rgba(47, 158, 114, 0.24);
+}

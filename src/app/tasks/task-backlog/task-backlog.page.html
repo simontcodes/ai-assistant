@@ -1,0 +1,29 @@
+<ion-content [fullscreen]="true" class="screen-shell">
+  <div class="app-page tasks-page">
+    <header class="tasks-topbar">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+      <h1>Task Backlog</h1>
+      <div class="tasks-topbar__badge">
+        <ion-icon name="card-outline"></ion-icon>
+      </div>
+    </header>
+
+    <div class="filters">
+      <button type="button" [class.active]="selectedFilter === 'all'" (click)="selectedFilter = 'all'">All</button>
+      <button type="button" [class.active]="selectedFilter === 'high'" (click)="selectedFilter = 'high'">High Priority</button>
+      <button type="button" [class.active]="selectedFilter === 'remote'" (click)="selectedFilter = 'remote'">Remote</button>
+    </div>
+
+    <div class="task-list">
+      <app-task-card *ngFor="let task of tasks" [task]="task" (markDone)="markDone($event)"></app-task-card>
+    </div>
+
+    <section *ngIf="tasks.length === 0" class="empty-state soft-card">
+      No tasks match this filter yet.
+    </section>
+  </div>
+
+  <div class="fixed-stack">
+    <app-bottom-tabs></app-bottom-tabs>
+  </div>
+</ion-content>

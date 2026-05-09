@@ -1,0 +1,73 @@
+.task-card {
+  overflow: hidden;
+}
+
+.task-visual {
+  height: 134px;
+}
+
+.task-card.desk .task-visual {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(163, 190, 122, 0.95), transparent 11%),
+    linear-gradient(135deg, #f7e6b8 0%, #f1d8aa 34%, #ece6dc 35%, #ece6dc 100%);
+}
+
+.task-card.market .task-visual {
+  background:
+    repeating-linear-gradient(90deg, #6aa46a 0 14%, #7eb06c 14% 28%, #f0b14a 28% 42%, #d85648 42% 56%, #bfd17a 56% 70%, #7db17d 70% 84%, #c44a46 84% 100%);
+}
+
+.task-card.wellness .task-visual {
+  background:
+    linear-gradient(180deg, rgba(243, 214, 146, 0.55), rgba(243, 214, 146, 0.05)),
+    linear-gradient(90deg, #d4b18d 0 10%, #f8f1e8 10% 100%);
+}
+
+.task-body {
+  padding: 16px;
+}
+
+.task-head {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.task-head h3 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.badge {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #fff2eb;
+  color: #ff8847;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  color: var(--app-text-muted);
+}
+
+.done-btn {
+  margin-top: 16px;
+  border: 0;
+  border-radius: 14px;
+  height: 42px;
+  padding: 0 16px;
+  background: #f4f8ff;
+  color: #4866b1;
+  font: inherit;
+  font-weight: 700;
+}

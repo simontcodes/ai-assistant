@@ -1,0 +1,23 @@
+<article class="task-card soft-card" [class]="'task-card ' + visualClass">
+  <div class="task-visual"></div>
+  <div class="task-body">
+    <div class="task-head">
+      <h3>{{ task.title }}</h3>
+      <span class="badge">{{ badgeLabel }}</span>
+    </div>
+    <p class="task-meta">
+      <ion-icon name="time-outline"></ion-icon>
+      {{ task.estimatedDurationMinutes }}m
+      <span>•</span>
+      {{ task.canDoRemotely ? 'Remote' : 'On-site' }}
+    </p>
+    <p class="task-meta">
+      <ion-icon name="sunny-outline"></ion-icon>
+      Best time:
+      {{ task.bestTimeOfDay?.[0] ? (task.bestTimeOfDay?.[0] | titlecase) : 'Flexible' }}
+    </p>
+    <button *ngIf="task.status === 'pending'" type="button" class="done-btn" (click)="markDone.emit(task.id)">
+      Mark Done
+    </button>
+  </div>
+</article>

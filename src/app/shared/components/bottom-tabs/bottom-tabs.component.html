@@ -1,0 +1,12 @@
+<nav class="tabs soft-card">
+  <a
+    *ngFor="let tab of tabs"
+    class="tab"
+    [routerLink]="tab.route"
+    routerLinkActive="tab--active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <ion-icon [name]="tab.icon"></ion-icon>
+    <span>{{ tab.label }}</span>
+  </a>
+</nav>

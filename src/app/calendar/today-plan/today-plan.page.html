@@ -1,0 +1,39 @@
+<ion-content [fullscreen]="true" class="screen-shell">
+  <div class="app-page today-page">
+    <header class="today-header">
+      <div>
+        <p class="page-label">Schedule</p>
+        <h1 class="page-title">Today</h1>
+      </div>
+      <div class="today-header__actions">
+        <button type="button"><ion-icon name="calendar-outline"></ion-icon></button>
+        <app-assistant-avatar size="sm"></app-assistant-avatar>
+      </div>
+    </header>
+
+    <section class="timeline">
+      <div class="timeline-event" *ngFor="let event of events; index as i">
+        <div class="timeline-marker" [class.timeline-marker--gap]="i < gaps.length"></div>
+        <div class="timeline-content">
+          <article class="event-card soft-card">
+            <div class="event-card__top">
+              <h3>{{ event.title }}</h3>
+              <span>{{ formatTime(event.start) }}</span>
+            </div>
+            <p>{{ event.location || 'Scheduled event' }}</p>
+          </article>
+
+          <app-timeline-gap-card
+            *ngIf="gaps[i]"
+            [gap]="gaps[i]"
+            [recommendationTitle]="featuredTaskTitle || 'Open task list'"
+          ></app-timeline-gap-card>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="fixed-stack">
+    <app-bottom-tabs></app-bottom-tabs>
+  </div>
+</ion-content>
