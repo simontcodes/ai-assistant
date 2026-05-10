@@ -1,10 +1,53 @@
 <article class="gap-card">
-  <div class="gap-card__meta">
-    <span>{{ gap.durationMinutes }}m</span>
-    <span>Free Gap</span>
-    <p>A practical time to handle a quick task.</p>
+  <div class="gap-card__header">
+    <span class="gap-card__eyebrow">{{ gap.durationMinutes }} min free</span>
+    <span>{{ gap.start | date: 'shortTime' }} - {{ gap.end | date: 'shortTime' }}</span>
   </div>
-  <button type="button" class="gap-card__cta">
-    {{ recommendationTitle || recommendationCta }}
-  </button>
+  <div class="gap-card__body">
+    <div class="gap-card__icon">
+      <ion-icon name="sparkles-outline"></ion-icon>
+    </div>
+    <div>
+      <p class="gap-card__label">Suggested task</p>
+      <h3>{{ recommendation?.task?.title || 'No task fits this gap' }}</h3>
+      <p>
+        <ng-container *ngIf="recommendation?.task && recommendation?.suggestion; else emptyState">
+          {{ recommendation?.suggestion?.totalRequiredMinutes }} min total · {{ priorityLabel | titlecase }} ·
+          {{ recommendation?.task?.canDoRemotely ? 'Remote' : 'On-site' }}
+        </ng-container>
+        <ng-template #emptyState>{{ recommendation?.rejectionReason || 'Add tasks in chat to fill this gap.' }}</ng-template>
+      </p>
+    </div>
+  </div>
+  <p *ngIf="recommendation?.suggestion" class="gap-card__reason">
+    {{ recommendation?.suggestion?.reason }}
+  </p>
+  <div *ngIf="extraOptionCount > 0" class="gap-card__alternatives">
+    <p>{{ extraOptionCount }} more {{ extraOptionCount === 1 ? 'task fits' : 'tasks fit' }} this gap</p>
+    <button
+      *ngFor="let option of recommendation?.alternatives?.slice(1)"
+      type="button"
+      class="gap-card__alternative"
+      (click)="taskSelected.emit(option.task.id)"
+    >
+      <span>{{ option.task.title }}</span>
+      <strong>{{ option.suggestion.totalRequiredMinutes }}m · Score {{ option.suggestion.score }}</strong>
+    </button>
+  </div>
+  <div *ngIf="recommendation?.task" class="gap-card__actions">
+    <button
+      type="button"
+      class="gap-card__action gap-card__action--primary"
+      (click)="actionSelected.emit('do-now')"
+      [disabled]="recommendation?.state === 'done'"
+    >
+      {{ actionLabel }}
+    </button>
+    <button type="button" class="gap-card__action" (click)="actionSelected.emit('later')" [disabled]="recommendation?.state === 'done'">
+      {{ recommendation?.state === 'deferred' ? 'Deferred' : 'Later' }}
+    </button>
+    <button type="button" class="gap-card__action" (click)="actionSelected.emit('done')">
+      Done
+    </button>
+  </div>
 </article>

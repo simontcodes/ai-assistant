@@ -1,3 +1,11 @@
 export const environment = {
-  production: true
+  production: true,
+  openAi: {
+    enabled: false,
+    apiKey: '',
+    model: 'gpt-4o-mini',
+  },
+  google: {
+    webClientId: '',
+  },
 };

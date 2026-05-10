@@ -1,30 +1,28 @@
 <ion-content [fullscreen]="true" class="screen-shell">
   <div class="app-page assistant-page">
     <header class="topbar">
-      <ion-button fill="clear" color="dark">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
-      <div class="topbar-center">
-        <app-assistant-avatar [name]="assistantProfile.name" [state]="avatarState" size="sm"></app-assistant-avatar>
-        <span>AI Assistant</span>
+      <div>
+        <p class="topbar-kicker">AI Assistant</p>
+        <h1>{{ assistantProfile.name }}</h1>
       </div>
-      <ion-button fill="clear" color="dark">
+      <ion-button fill="clear" color="dark" aria-label="Assistant options">
         <ion-icon name="ellipsis-vertical"></ion-icon>
       </ion-button>
     </header>
 
     <section class="character-stage soft-card">
       <div class="stage-copy">
-        <p class="page-label">Assistant</p>
-        <h1 class="page-title">{{ assistantProfile.name }}</h1>
-        <p>Calm, practical help for the next realistic step in your day.</p>
+        <p class="page-label">{{ avatarState | titlecase }}</p>
+        <h2>What should we make fit?</h2>
+        <p>Drop in a task, ask for a gap, or update what matters today.</p>
       </div>
       <app-assistant-avatar [name]="assistantProfile.name" [state]="avatarState"></app-assistant-avatar>
     </section>
 
     <div class="prompt-row">
-      <button type="button" class="prompt-chip" (click)="usePrompt('I need to pay my credit card bill')">Add task</button>
+      <button type="button" class="prompt-chip" (click)="usePrompt('add todo reply to email high priority 15 minutes remote')">Quick task</button>
       <button type="button" class="prompt-chip" (click)="usePrompt('What can I do now?')">What fits now?</button>
+      <button type="button" class="prompt-chip" (click)="usePrompt('make that high priority')">Update last task</button>
     </div>
 
     <section class="message-list">
@@ -38,7 +36,7 @@
 
   <div class="fixed-stack">
     <section class="composer soft-card">
-      <button type="button" class="composer-icon">
+      <button type="button" class="composer-icon" aria-label="Add attachment">
         <ion-icon name="add-circle-outline"></ion-icon>
       </button>
       <ion-textarea
@@ -46,10 +44,10 @@
         auto-grow="true"
         placeholder="Type your message..."
       ></ion-textarea>
-      <button type="button" class="composer-icon">
+      <button type="button" class="composer-icon" aria-label="Voice input">
         <ion-icon name="mic-outline"></ion-icon>
       </button>
-      <button type="button" class="send-btn" (click)="sendMessage()" [disabled]="!draftMessage.trim() || isSending">
+      <button type="button" class="send-btn" aria-label="Send message" (click)="sendMessage()" [disabled]="!draftMessage.trim() || isSending">
         <ion-icon name="send"></ion-icon>
       </button>
     </section>

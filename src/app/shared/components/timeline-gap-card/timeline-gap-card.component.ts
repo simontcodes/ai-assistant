@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { CalendarGap } from '../../models/domain.models';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CalendarGap, GapRecommendation } from '../../models/domain.models';
+
+export type TimelineGapAction = 'do-now' | 'later' | 'done';
 
 @Component({
   selector: 'app-timeline-gap-card',
@@ -9,6 +11,20 @@ import { CalendarGap } from '../../models/domain.models';
 })
 export class TimelineGapCardComponent {
   @Input({ required: true }) gap!: CalendarGap;
-  @Input() recommendationTitle?: string;
+  @Input() recommendation?: GapRecommendation;
   @Input() recommendationCta = 'Open Task';
+  @Output() actionSelected = new EventEmitter<TimelineGapAction>();
+  @Output() taskSelected = new EventEmitter<string>();
+
+  get priorityLabel(): string {
+    return this.recommendation?.task ? `${this.recommendation.task.priority} priority` : 'Task backlog';
+  }
+
+  get actionLabel(): string {
+    return this.recommendation?.state === 'accepted' ? 'In Focus' : 'Do This';
+  }
+
+  get extraOptionCount(): number {
+    return Math.max(0, (this.recommendation?.alternatives?.length ?? 0) - 1);
+  }
 }

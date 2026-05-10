@@ -34,6 +34,16 @@ log.txt
 npm-debug.log
 yarn-error.log
 
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+google-services.json
+*.jks
+*.keystore
+*.p12
+*.pem
+
 # IDEs and editors
 .idea/
 .project

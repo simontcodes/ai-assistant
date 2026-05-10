@@ -52,6 +52,12 @@
   margin-bottom: 10px;
 }
 
+.setting-row--stack {
+  display: grid;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
 .setting-row h3,
 .setting-row p {
   margin: 0;
@@ -71,10 +77,42 @@
 ion-input {
   --padding-start: 10px;
   --padding-end: 10px;
+  width: 100%;
   min-height: 40px;
   border-radius: 12px;
   background: var(--app-surface-soft);
   color: var(--app-text);
+}
+
+.setting-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.setting-action {
+  min-height: 42px;
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  padding: 0 16px;
+  background: #fff;
+  color: var(--app-text-muted);
+  font: inherit;
+  font-weight: 800;
+}
+
+.setting-action--primary {
+  border-color: transparent;
+  background: var(--app-accent);
+  color: #fff;
+}
+
+.setting-action:disabled {
+  opacity: 0.55;
+}
+
+.setting-error {
+  color: #bf3d2f;
 }
 
 .save-button {

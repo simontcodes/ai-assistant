@@ -27,7 +27,17 @@ export interface CalendarEvent {
   start: string;
   end: string;
   source: 'google' | 'manual';
+  calendarName?: string;
+  description?: string;
   location?: string;
+  attendees?: CalendarAttendee[];
+}
+
+export interface CalendarAttendee {
+  email: string;
+  name?: string;
+  responseStatus?: 'needsAction' | 'declined' | 'tentative' | 'accepted';
+  self?: boolean;
 }
 
 export interface CalendarGap {
@@ -63,6 +73,20 @@ export interface TaskSuggestion {
   rejectionReason?: string;
   travelTimeMinutes?: number;
   totalRequiredMinutes: number;
+}
+
+export interface GapRecommendation {
+  gap: CalendarGap;
+  task?: Task;
+  suggestion?: TaskSuggestion;
+  alternatives?: GapRecommendationOption[];
+  rejectionReason?: string;
+  state?: 'active' | 'accepted' | 'deferred' | 'done';
+}
+
+export interface GapRecommendationOption {
+  task: Task;
+  suggestion: TaskSuggestion;
 }
 
 export interface UserPreferences {

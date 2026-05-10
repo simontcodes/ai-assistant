@@ -11,11 +11,18 @@
     <div class="filters">
       <button type="button" [class.active]="selectedFilter === 'all'" (click)="selectedFilter = 'all'">All</button>
       <button type="button" [class.active]="selectedFilter === 'high'" (click)="selectedFilter = 'high'">High Priority</button>
+      <button type="button" [class.active]="selectedFilter === 'medium'" (click)="selectedFilter = 'medium'">Medium</button>
+      <button type="button" [class.active]="selectedFilter === 'low'" (click)="selectedFilter = 'low'">Low</button>
       <button type="button" [class.active]="selectedFilter === 'remote'" (click)="selectedFilter = 'remote'">Remote</button>
     </div>
 
     <div class="task-list">
-      <app-task-card *ngFor="let task of tasks" [task]="task" (markDone)="markDone($event)"></app-task-card>
+      <app-task-card
+        *ngFor="let task of tasks"
+        [task]="task"
+        (markDone)="markDone($event)"
+        (editTask)="openEditor($event)"
+      ></app-task-card>
     </div>
 
     <section *ngIf="tasks.length === 0" class="empty-state soft-card">
@@ -26,4 +33,112 @@
   <div class="fixed-stack">
     <app-bottom-tabs></app-bottom-tabs>
   </div>
+
+  <div *ngIf="editorForm" class="editor-scrim" (click)="closeEditor()"></div>
+  <section *ngIf="editorForm" class="task-editor" aria-label="Edit task">
+    <header class="editor-header">
+      <div>
+        <p>Edit task</p>
+        <h2>{{ editorTask?.title }}</h2>
+      </div>
+      <button type="button" class="icon-btn" aria-label="Close editor" (click)="closeEditor()">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </header>
+
+    <form class="editor-form" (ngSubmit)="saveEditor()">
+      <label class="field">
+        <span>Title</span>
+        <input name="title" [(ngModel)]="editorForm.title" required />
+      </label>
+
+      <label class="field">
+        <span>Description</span>
+        <textarea name="description" rows="3" [(ngModel)]="editorForm.description"></textarea>
+      </label>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Priority</span>
+          <select name="priority" [(ngModel)]="editorForm.priority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Status</span>
+          <select name="status" [(ngModel)]="editorForm.status">
+            <option value="pending">Pending</option>
+            <option value="done">Done</option>
+            <option value="dismissed">Dismissed</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Duration</span>
+          <input name="duration" type="number" min="5" step="5" [(ngModel)]="editorForm.estimatedDurationMinutes" />
+        </label>
+
+        <label class="field">
+          <span>Deadline</span>
+          <input name="dueDate" type="datetime-local" [(ngModel)]="editorForm.dueDate" />
+        </label>
+      </div>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Best time</span>
+          <select name="bestTimeOfDay" [(ngModel)]="editorForm.bestTimeOfDay">
+            <option value="flexible">Flexible</option>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+            <option value="night">Night</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Energy</span>
+          <select name="energyRequired" [(ngModel)]="editorForm.energyRequired">
+            <option value="unspecified">Unspecified</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <label>
+          <input name="canDoRemotely" type="checkbox" [(ngModel)]="editorForm.canDoRemotely" />
+          Remote possible
+        </label>
+        <label>
+          <input name="requiresLocation" type="checkbox" [(ngModel)]="editorForm.requiresLocation" />
+          Needs location
+        </label>
+      </div>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Location type</span>
+          <input name="locationType" placeholder="Home, store, office" [(ngModel)]="editorForm.locationType" />
+        </label>
+
+        <label class="field">
+          <span>Address</span>
+          <input name="locationAddress" placeholder="Optional" [(ngModel)]="editorForm.locationAddress" />
+        </label>
+      </div>
+
+      <div class="editor-actions">
+        <button type="button" class="secondary-btn" (click)="closeEditor()">Cancel</button>
+        <button type="submit" class="primary-btn" [disabled]="!editorForm.title.trim()">Save changes</button>
+      </div>
+    </form>
+  </section>
 </ion-content>

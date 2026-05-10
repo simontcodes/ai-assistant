@@ -1,7 +1,7 @@
 <article class="chat-row" [class.chat-row--user]="message.role === 'user'">
   <div class="message-orb" *ngIf="message.role !== 'user'"></div>
   <div class="bubble" [class.bubble--user]="message.role === 'user'">
-    <p>{{ message.content }}</p>
+    <p *ngIf="displayContent">{{ displayContent }}</p>
     <div class="suggestions" *ngIf="message.suggestions?.length">
       <app-suggestion-card
         *ngFor="let suggestion of message.suggestions; index as i"

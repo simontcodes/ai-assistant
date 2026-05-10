@@ -6,10 +6,44 @@
         <h1 class="page-title">Today</h1>
       </div>
       <div class="today-header__actions">
-        <button type="button"><ion-icon name="calendar-outline"></ion-icon></button>
+        <button type="button" (click)="loadEvents(true)" [disabled]="isLoading">
+          <ion-icon name="refresh-outline"></ion-icon>
+        </button>
         <app-assistant-avatar size="sm"></app-assistant-avatar>
       </div>
     </header>
+
+    <section *ngIf="isLoading" class="today-state soft-card">
+      Loading calendar events...
+    </section>
+
+    <section *ngIf="loadError" class="today-state today-state--error soft-card">
+      {{ loadError }}
+    </section>
+
+    <section *ngIf="!isLoading && !loadError && events.length === 0" class="today-state soft-card">
+      No Google Calendar events found for today. If this looks wrong, reconnect Google Calendar in Settings, then refresh.
+    </section>
+
+    <section *ngIf="debugInfo" class="today-debug soft-card">
+      <div class="today-debug__row">
+        <span>Google connected</span>
+        <strong>{{ debugInfo.connected ? 'Yes' : 'No' }}</strong>
+      </div>
+      <div class="today-debug__row" *ngIf="debugInfo.status">
+        <span>API status</span>
+        <strong>{{ debugInfo.status }}</strong>
+      </div>
+      <div class="today-debug__row" *ngIf="debugInfo.rawItemCount !== undefined">
+        <span>Raw events</span>
+        <strong>{{ debugInfo.rawItemCount }}</strong>
+      </div>
+      <div class="today-debug__row" *ngIf="debugInfo.mappedEventCount !== undefined">
+        <span>Shown events</span>
+        <strong>{{ debugInfo.mappedEventCount }}</strong>
+      </div>
+      <p *ngIf="debugInfo.error">{{ debugInfo.error }}</p>
+    </section>
 
     <section class="timeline">
       <div class="timeline-event" *ngFor="let event of events; index as i">
@@ -17,16 +51,33 @@
         <div class="timeline-content">
           <article class="event-card soft-card">
             <div class="event-card__top">
-              <h3>{{ event.title }}</h3>
-              <span>{{ formatTime(event.start) }}</span>
+              <div>
+                <p class="event-card__source">{{ event.calendarName || (event.source | titlecase) }}</p>
+                <h3>{{ event.title }}</h3>
+              </div>
+              <span>{{ formatTime(event.start) }} - {{ formatTime(event.end) }}</span>
             </div>
-            <p>{{ event.location || 'Scheduled event' }}</p>
+            <p class="event-card__location">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ event.location || 'No location' }}
+            </p>
+            <p *ngIf="event.description" class="event-card__description">{{ event.description }}</p>
+            <div *ngIf="event.attendees?.length" class="event-card__attendees">
+              <span *ngFor="let attendee of event.attendees?.slice(0, 4)">
+                {{ attendeeLabel(attendee) }}
+              </span>
+              <span *ngIf="(event.attendees?.length || 0) > 4">
+                +{{ (event.attendees?.length || 0) - 4 }} more
+              </span>
+            </div>
           </article>
 
           <app-timeline-gap-card
-            *ngIf="gaps[i]"
+            *ngIf="gaps[i] && shouldShowGap(gaps[i].id)"
             [gap]="gaps[i]"
-            [recommendationTitle]="featuredTaskTitle || 'Open task list'"
+            [recommendation]="gapRecommendation(gaps[i].id)"
+            (actionSelected)="handleRecommendationAction(gaps[i].id, $event)"
+            (taskSelected)="selectRecommendationTask(gaps[i].id, $event)"
           ></app-timeline-gap-card>
         </div>
       </div>

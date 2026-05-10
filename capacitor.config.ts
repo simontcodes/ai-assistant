@@ -5,6 +5,16 @@ const config: CapacitorConfig = {
   appName: 'AI Day Assistant',
   webDir: 'www',
   bundledWebRuntime: false,
+  plugins: {
+    SocialLogin: {
+      providers: {
+        google: true,
+        facebook: false,
+        apple: false,
+        twitter: false,
+      },
+    },
+  },
 };
 
 export default config;

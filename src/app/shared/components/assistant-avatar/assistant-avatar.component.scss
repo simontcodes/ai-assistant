@@ -2,56 +2,262 @@
   position: relative;
   display: inline-grid;
   justify-items: center;
-  gap: 12px;
+  gap: 10px;
+  color: var(--app-text);
+  --avatar-size: 132px;
+  --avatar-scale: 1;
+  --avatar-main: #6f8792;
+  --avatar-main-dark: #506b78;
+  --avatar-main-light: #adc4c9;
+  --avatar-accent: var(--app-accent);
+  --avatar-glow: rgba(255, 98, 10, 0.2);
 }
 
-.avatar-shell.sm .avatar-core {
-  width: 52px;
-  height: 52px;
+.avatar-shell.sm {
+  --avatar-size: 44px;
+  --avatar-scale: 0.36;
+  gap: 0;
 }
 
-.avatar-shell.md .avatar-core {
-  width: 72px;
-  height: 72px;
+.avatar-shell.md {
+  --avatar-size: 72px;
+  --avatar-scale: 0.58;
 }
 
-.avatar-shell.lg .avatar-core {
-  width: 132px;
-  height: 132px;
+.avatar-shell.lg {
+  --avatar-size: 132px;
+  --avatar-scale: 1;
 }
 
 .avatar-aura {
   position: absolute;
-  inset: 8px 0 auto;
+  inset: calc(var(--avatar-size) * -0.05) 0 auto;
   margin: auto;
-  width: 150px;
-  height: 150px;
+  width: calc(var(--avatar-size) * 1.2);
+  height: calc(var(--avatar-size) * 1.2);
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, rgba(130, 149, 169, 0.2), rgba(130, 149, 169, 0) 68%);
-  filter: blur(2px);
+  background: radial-gradient(circle at 50% 50%, var(--avatar-glow), rgba(130, 149, 169, 0) 68%);
+  filter: blur(1px);
+  opacity: 0.9;
+  animation: auraBreathe 4s ease-in-out infinite;
 }
 
-.avatar-core {
-  position: relative;
-  z-index: 1;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(180deg, #7f8d90 0%, #94a0a2 100%);
-  box-shadow: inset 0 -10px 18px rgba(255, 255, 255, 0.16), 0 24px 30px rgba(52, 67, 90, 0.12);
-}
-
-.avatar-face {
-  width: 46%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.eye {
+.avatar-aura span {
+  position: absolute;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 16px var(--avatar-glow);
+  animation: moteDrift 5s ease-in-out infinite;
+}
+
+.avatar-aura span:nth-child(1) {
+  top: 18%;
+  left: 18%;
+}
+
+.avatar-aura span:nth-child(2) {
+  top: 26%;
+  right: 14%;
+  animation-delay: -1.4s;
+}
+
+.avatar-aura span:nth-child(3) {
+  right: 24%;
+  bottom: 18%;
+  animation-delay: -2.6s;
+}
+
+.avatar-character {
+  position: relative;
+  z-index: 1;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  display: grid;
+  justify-items: center;
+  align-items: end;
+  animation: avatarFloat 4.2s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+.avatar-head {
+  position: absolute;
+  top: 3%;
+  width: 78%;
+  height: 72%;
+  border-radius: 42% 42% 46% 46%;
+  background:
+    radial-gradient(circle at 32% 22%, rgba(255, 255, 255, 0.6), transparent 18%),
+    linear-gradient(180deg, var(--avatar-main-light) 0%, var(--avatar-main) 48%, var(--avatar-main-dark) 100%);
+  box-shadow:
+    inset 0 -12px 20px rgba(34, 55, 90, 0.18),
+    0 18px 28px rgba(52, 67, 90, 0.16);
+}
+
+.avatar-head::before,
+.avatar-head::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  width: 13%;
+  height: 24%;
+  border-radius: 999px;
+  background: var(--avatar-main-dark);
+  opacity: 0.9;
+}
+
+.avatar-head::before {
+  left: -7%;
+}
+
+.avatar-head::after {
+  right: -7%;
+}
+
+.avatar-hair {
+  position: absolute;
+  top: -7%;
+  width: 20%;
+  height: 20%;
+  border-radius: 12px 12px 50% 50%;
+  background: var(--avatar-main-dark);
+}
+
+.avatar-hair--left {
+  left: 28%;
+  transform: rotate(-14deg);
+}
+
+.avatar-hair--right {
+  right: 28%;
+  transform: rotate(14deg);
+}
+
+.avatar-face {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 25%;
+  bottom: 18%;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.eye {
+  position: absolute;
+  top: 36%;
+  width: 13%;
+  height: 15%;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 -2px 0 rgba(36, 51, 77, 0.14);
+  animation: blink 5.4s infinite;
+}
+
+.eye::after {
+  content: "";
+  position: absolute;
+  right: 20%;
+  bottom: 18%;
+  width: 38%;
+  height: 38%;
+  border-radius: 50%;
+  background: #24334d;
+  animation: eyeLook 6s ease-in-out infinite;
+}
+
+.eye--left {
+  left: 24%;
+}
+
+.eye--right {
+  right: 24%;
+}
+
+.avatar-brow {
+  position: absolute;
+  top: 25%;
+  width: 20%;
+  height: 5%;
+  border-radius: 999px;
+  background: rgba(36, 51, 77, 0.28);
+}
+
+.avatar-brow--left {
+  left: 21%;
+  transform: rotate(-6deg);
+}
+
+.avatar-brow--right {
+  right: 21%;
+  transform: rotate(6deg);
+}
+
+.cheek {
+  position: absolute;
+  top: 57%;
+  width: 12%;
+  height: 6%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.cheek--left {
+  left: 18%;
+}
+
+.cheek--right {
+  right: 18%;
+}
+
+.mouth {
+  position: absolute;
+  left: 40%;
+  top: 66%;
+  width: 20%;
+  height: 7%;
+  border-radius: 0 0 999px 999px;
+  border-bottom: 3px solid rgba(36, 51, 77, 0.58);
+}
+
+.avatar-body {
+  position: absolute;
+  bottom: 4%;
+  width: 56%;
+  height: 30%;
+  border-radius: 38% 38% 32% 32%;
+  background:
+    linear-gradient(90deg, transparent 0 15%, rgba(255, 255, 255, 0.16) 15% 20%, transparent 20% 80%, rgba(255, 255, 255, 0.16) 80% 85%, transparent 85% 100%),
+    linear-gradient(180deg, var(--avatar-main) 0%, var(--avatar-main-dark) 100%);
+  box-shadow: 0 16px 24px rgba(52, 67, 90, 0.12);
+}
+
+.avatar-body span {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  width: 18%;
+  height: 18%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--avatar-accent);
+  box-shadow: 0 0 16px var(--avatar-glow);
+}
+
+.avatar-status {
+  position: absolute;
+  top: 0;
+  right: 13%;
+  z-index: 2;
+  width: 16%;
+  height: 16%;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: var(--avatar-accent);
+  box-shadow: 0 0 18px var(--avatar-glow);
+  animation: statusPulse 2.2s ease-in-out infinite;
 }
 
 .avatar-name {
@@ -61,34 +267,204 @@
   font-weight: 600;
 }
 
-.listening .avatar-core {
-  background: linear-gradient(180deg, #7a9db0 0%, #9fb9c6 100%);
+.sm .avatar-name {
+  display: none;
 }
 
-.thinking .avatar-core {
-  background: linear-gradient(180deg, #8690a6 0%, #a3acc2 100%);
-  animation: floatPulse 1.8s ease-in-out infinite;
+.listening {
+  --avatar-main: #6c9fb2;
+  --avatar-main-dark: #4d7f92;
+  --avatar-main-light: #b3d2dc;
+  --avatar-accent: #4f9cf9;
+  --avatar-glow: rgba(79, 156, 249, 0.24);
 }
 
-.suggesting .avatar-core {
-  background: linear-gradient(180deg, #ff8e53 0%, #ff620a 100%);
+.listening .avatar-character {
+  animation: listeningNod 1.8s ease-in-out infinite;
 }
 
-.success .avatar-core {
-  background: linear-gradient(180deg, #6fb98f 0%, #2f9e72 100%);
+.listening .mouth {
+  height: 10%;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(36, 51, 77, 0.5);
+  animation: talkPulse 1.1s ease-in-out infinite;
 }
 
-.warning .avatar-core {
-  background: linear-gradient(180deg, #f4b14b 0%, #e58225 100%);
+.thinking {
+  --avatar-main: #7d85a3;
+  --avatar-main-dark: #5d6685;
+  --avatar-main-light: #b6bdd1;
+  --avatar-accent: #7b71f2;
+  --avatar-glow: rgba(123, 113, 242, 0.24);
 }
 
-@keyframes floatPulse {
+.thinking .avatar-character {
+  animation: thinkingFloat 1.8s ease-in-out infinite;
+}
+
+.thinking .avatar-status {
+  animation-duration: 0.9s;
+}
+
+.suggesting {
+  --avatar-main: #f48752;
+  --avatar-main-dark: #c55429;
+  --avatar-main-light: #ffd2b5;
+  --avatar-accent: #ff620a;
+  --avatar-glow: rgba(255, 98, 10, 0.3);
+}
+
+.suggesting .avatar-character {
+  animation: suggestPop 1.6s ease-in-out infinite;
+}
+
+.success {
+  --avatar-main: #62ad86;
+  --avatar-main-dark: #2f8060;
+  --avatar-main-light: #a9d5c0;
+  --avatar-accent: var(--app-success);
+  --avatar-glow: rgba(47, 158, 114, 0.28);
+}
+
+.success .mouth {
+  left: 37%;
+  width: 26%;
+  height: 9%;
+  border-bottom-color: rgba(36, 51, 77, 0.68);
+}
+
+.warning {
+  --avatar-main: #e5a348;
+  --avatar-main-dark: #b67325;
+  --avatar-main-light: #f4d59b;
+  --avatar-accent: var(--app-warning);
+  --avatar-glow: rgba(244, 162, 58, 0.28);
+}
+
+.warning .avatar-brow--left {
+  transform: rotate(10deg);
+}
+
+.warning .avatar-brow--right {
+  transform: rotate(-10deg);
+}
+
+@keyframes avatarFloat {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(0deg);
   }
 
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-4%) rotate(-1deg);
+  }
+}
+
+@keyframes thinkingFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-7%) rotate(2deg);
+  }
+}
+
+@keyframes listeningNod {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(2%) rotate(3deg);
+  }
+}
+
+@keyframes suggestPop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  45% {
+    transform: translateY(-5%) scale(1.03);
+  }
+}
+
+@keyframes auraBreathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes moteDrift {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes eyeLook {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  35% {
+    transform: translate(-18%, -4%);
+  }
+
+  70% {
+    transform: translate(10%, 6%);
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.82);
+  }
+}
+
+@keyframes talkPulse {
+  0%,
+  100% {
+    transform: scale(0.75, 0.65);
+  }
+
+  50% {
+    transform: scale(1, 1.1);
   }
 }

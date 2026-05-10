@@ -1,29 +1,62 @@
-.topbar {
-  display: grid;
-  grid-template-columns: 44px 1fr 44px;
-  align-items: center;
-  margin-bottom: 16px;
+.assistant-page {
+  padding-bottom: calc(220px + env(safe-area-inset-bottom, 0px));
 }
 
-.topbar-center {
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  font-weight: 700;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.topbar h1,
+.topbar-kicker {
+  margin: 0;
+}
+
+.topbar h1 {
+  color: var(--app-text);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.topbar-kicker {
   color: var(--app-text-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.topbar ion-button {
+  --border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  --background: #fff;
+  --box-shadow: var(--app-shadow-soft);
 }
 
 .character-stage {
   display: grid;
-  justify-items: center;
-  gap: 18px;
-  padding: 24px 20px;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
   margin-bottom: 18px;
-  text-align: center;
+  text-align: left;
+  overflow: hidden;
+}
+
+.stage-copy h2 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 26px;
+  line-height: 1.1;
 }
 
 .stage-copy p:last-child {
-  margin: 12px auto 0;
+  margin: 10px 0 0;
   max-width: 260px;
   color: var(--app-text-muted);
   line-height: 1.5;
@@ -34,13 +67,18 @@
   gap: 10px;
   margin-bottom: 16px;
   overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.prompt-row::-webkit-scrollbar {
+  display: none;
 }
 
 .prompt-chip {
   flex: 0 0 auto;
-  border: 0;
-  border-radius: 999px;
-  padding: 12px 16px;
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  padding: 10px 14px;
   background: #fff;
   color: var(--app-text-muted);
   font: inherit;
@@ -51,16 +89,19 @@
 .message-list {
   display: grid;
   gap: 16px;
+  padding-bottom: 16px;
 }
 
 .composer {
   display: grid;
-  grid-template-columns: 34px 1fr 34px 44px;
+  grid-template-columns: 34px 1fr 34px 42px;
   gap: 8px;
   align-items: center;
-  padding: 8px 10px 8px 12px;
+  padding: 8px 10px;
   margin-bottom: 12px;
-  border-radius: 999px;
+  border-radius: 22px;
+  position: relative;
+  z-index: 1;
 }
 
 .composer-icon,
@@ -76,8 +117,8 @@
 }
 
 .send-btn {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   background: var(--app-accent);
   color: #fff;
 }
@@ -87,5 +128,14 @@ ion-textarea {
   --padding-bottom: 10px;
   --padding-start: 8px;
   --padding-end: 8px;
-  color: var(--app-text-muted);
+  color: var(--app-text);
+  max-height: 112px;
+}
+
+@media (max-width: 380px) {
+  .character-stage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
 }

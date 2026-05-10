@@ -11,25 +11,30 @@
 }
 
 .message-orb {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: #b8c1b3;
+  background:
+    radial-gradient(circle at 34% 32%, #fff 0 12%, transparent 13%),
+    linear-gradient(180deg, #ff9b61, var(--app-accent));
+  box-shadow: 0 8px 18px rgba(255, 98, 10, 0.18);
   margin-bottom: 10px;
 }
 
 .bubble {
   max-width: 86%;
-  padding: 16px 18px;
-  border-radius: 22px;
+  padding: 14px 16px;
+  border-radius: 18px;
   background: var(--app-surface);
+  color: var(--app-text);
   box-shadow: var(--app-shadow-soft);
+  overflow-wrap: anywhere;
 }
 
 .bubble--user {
   background: var(--app-accent);
   color: #fff;
-  border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 6px;
 }
 
 .bubble p {
@@ -42,6 +47,8 @@
 
 .suggestions {
   display: grid;
-  gap: 12px;
+  gap: 10px;
   margin-top: 14px;
+  margin-left: -6px;
+  margin-right: -6px;
 }

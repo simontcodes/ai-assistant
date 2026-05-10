@@ -10,17 +10,22 @@ import { Task } from '../../models/domain.models';
 export class TaskCardComponent {
   @Input({ required: true }) task!: Task;
   @Output() markDone = new EventEmitter<string>();
+  @Output() editTask = new EventEmitter<string>();
 
   get badgeLabel(): string {
-    if (this.task.priority === 'high') {
-      return 'High';
-    }
-
     if (this.task.status === 'done') {
       return 'Done';
     }
 
-    return this.task.requiresLocation ? 'On-site' : 'Remote';
+    if (this.task.priority === 'high') {
+      return 'High priority';
+    }
+
+    if (this.task.priority === 'low') {
+      return 'Low priority';
+    }
+
+    return 'Medium priority';
   }
 
   get visualClass(): string {

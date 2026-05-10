@@ -16,8 +16,18 @@
       Best time:
       {{ task.bestTimeOfDay?.[0] ? (task.bestTimeOfDay?.[0] | titlecase) : 'Flexible' }}
     </p>
-    <button *ngIf="task.status === 'pending'" type="button" class="done-btn" (click)="markDone.emit(task.id)">
-      Mark Done
-    </button>
+    <p *ngIf="task.dueDate" class="task-meta">
+      <ion-icon name="flag-outline"></ion-icon>
+      Due {{ task.dueDate | date: 'MMM d, h:mm a' }}
+    </p>
+    <div class="task-actions">
+      <button type="button" class="edit-btn" (click)="editTask.emit(task.id)">
+        <ion-icon name="create-outline"></ion-icon>
+        Edit
+      </button>
+      <button *ngIf="task.status === 'pending'" type="button" class="done-btn" (click)="markDone.emit(task.id)">
+        Mark Done
+      </button>
+    </div>
   </div>
 </article>

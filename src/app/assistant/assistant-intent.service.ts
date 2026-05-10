@@ -15,7 +15,11 @@ export class AssistantIntentService {
   detectIntent(message: string): AssistantIntent {
     const normalized = message.toLowerCase().trim();
 
-    if (/(i need to|remind me to|i want to|add task)/i.test(normalized)) {
+    if (
+      /(i need to|remind me to|remember to|i want to|add task|add a task|add todo|add a todo|save .* for later|put .* in (my )?backlog)/i.test(
+        normalized,
+      )
+    ) {
       return 'CREATE_TASK';
     }
 

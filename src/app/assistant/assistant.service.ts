@@ -131,7 +131,7 @@ export class AssistantService {
     const preferences = this.preferencesService.getPreferences();
     const currentLocation = await this.locationService.getCurrentLocation();
     const knownLocations = this.knownLocationService.getKnownLocations();
-    const events = this.calendarService.getTodayEvents();
+    const events = await this.calendarService.getTodayEvents();
     const now = new Date();
     const dayStart = now.toISOString();
     const dayEnd = combineDateAndTime(now, preferences.workDayEnd).toISOString();

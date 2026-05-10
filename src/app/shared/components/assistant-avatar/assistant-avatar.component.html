@@ -1,9 +1,26 @@
 <div class="avatar-shell" [class]="state + ' ' + size">
-  <div class="avatar-aura"></div>
-  <div class="avatar-core">
-    <div class="avatar-face">
-      <span class="eye"></span>
-      <span class="eye"></span>
+  <div class="avatar-aura">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="avatar-character" aria-hidden="true">
+    <div class="avatar-status"></div>
+    <div class="avatar-head">
+      <div class="avatar-hair avatar-hair--left"></div>
+      <div class="avatar-hair avatar-hair--right"></div>
+      <div class="avatar-face">
+        <div class="avatar-brow avatar-brow--left"></div>
+        <div class="avatar-brow avatar-brow--right"></div>
+        <span class="eye eye--left"></span>
+        <span class="eye eye--right"></span>
+        <span class="cheek cheek--left"></span>
+        <span class="cheek cheek--right"></span>
+        <span class="mouth"></span>
+      </div>
+    </div>
+    <div class="avatar-body">
+      <span></span>
     </div>
   </div>
   <p class="avatar-name">{{ name }}</p>

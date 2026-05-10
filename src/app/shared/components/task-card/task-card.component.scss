@@ -60,14 +60,33 @@
   color: var(--app-text-muted);
 }
 
-.done-btn {
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 16px;
+}
+
+.done-btn,
+.edit-btn {
   border: 0;
   border-radius: 14px;
   height: 42px;
   padding: 0 16px;
-  background: #f4f8ff;
-  color: #4866b1;
   font: inherit;
   font-weight: 700;
+}
+
+.done-btn {
+  background: #f4f8ff;
+  color: #4866b1;
+}
+
+.edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--app-text);
+  box-shadow: inset 0 0 0 1px rgba(32, 38, 51, 0.08);
 }

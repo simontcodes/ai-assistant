@@ -65,6 +65,45 @@
       <p class="group-label">Assistant</p>
       <article class="setting-row soft-card">
         <div>
+          <h3>OpenAI API key</h3>
+          <p>{{ openAiApiKey ? 'Configured' : 'Not configured' }}</p>
+        </div>
+        <ion-input [(ngModel)]="openAiApiKey" type="password" autocomplete="off"></ion-input>
+      </article>
+
+      <article class="setting-row setting-row--stack soft-card">
+        <div>
+          <h3>Google Calendar</h3>
+          <p>{{ googleSession?.email || 'Not connected' }}</p>
+        </div>
+        <ion-input
+          [(ngModel)]="googleWebClientId"
+          autocomplete="off"
+          placeholder="Google Web Client ID"
+        ></ion-input>
+        <div class="setting-actions">
+          <button
+            type="button"
+            class="setting-action setting-action--primary"
+            (click)="connectGoogleCalendar()"
+            [disabled]="isConnectingGoogle || !googleWebClientId.trim()"
+          >
+            {{ isConnectingGoogle ? 'Connecting...' : googleSession ? 'Reconnect' : 'Connect' }}
+          </button>
+          <button
+            *ngIf="googleSession"
+            type="button"
+            class="setting-action"
+            (click)="disconnectGoogleCalendar()"
+          >
+            Disconnect
+          </button>
+        </div>
+        <p *ngIf="googleAuthError" class="setting-error">{{ googleAuthError }}</p>
+      </article>
+
+      <article class="setting-row soft-card">
+        <div>
           <h3>Assistant personality</h3>
           <p>Calm & Direct</p>
         </div>
