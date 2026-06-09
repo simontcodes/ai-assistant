@@ -26,14 +26,34 @@ interface TaskEditorForm {
   standalone: false,
 })
 export class TaskBacklogPage {
+  selectedStatusFilter: 'pending' | 'done' | 'all' = 'pending';
   selectedFilter: 'all' | 'high' | 'medium' | 'low' | 'remote' = 'all';
   editorTask: Task | null = null;
   editorForm: TaskEditorForm | null = null;
+  isSyncingTasks = false;
 
   constructor(private readonly taskService: TaskService) {}
 
+  async ionViewWillEnter(): Promise<void> {
+    this.isSyncingTasks = true;
+
+    try {
+      await this.taskService.syncFromBackend();
+    } catch (error) {
+      console.warn('Backend task sync failed. Using locally saved tasks.', error);
+    } finally {
+      this.isSyncingTasks = false;
+    }
+  }
+
   get tasks(): Task[] {
-    const allTasks = this.taskService.getAllTasks();
+    const allTasks = this.taskService.getAllTasks().filter((task) => {
+      if (this.selectedStatusFilter === 'all') {
+        return true;
+      }
+
+      return task.status === this.selectedStatusFilter;
+    });
 
     if (this.selectedFilter === 'high') {
       return allTasks.filter((task) => task.priority === 'high');
@@ -54,8 +74,8 @@ export class TaskBacklogPage {
     return allTasks;
   }
 
-  markDone(taskId: string): void {
-    this.taskService.markTaskDone(taskId);
+  async markDone(taskId: string): Promise<void> {
+    await this.taskService.markTaskDoneWithBackend(taskId);
 
     if (this.editorForm?.id === taskId) {
       this.closeEditor();
@@ -93,7 +113,7 @@ export class TaskBacklogPage {
     this.editorForm = null;
   }
 
-  saveEditor(): void {
+  async saveEditor(): Promise<void> {
     if (!this.editorForm) {
       return;
     }
@@ -109,7 +129,7 @@ export class TaskBacklogPage {
     const locationType = this.editorForm.locationType.trim();
     const locationAddress = this.editorForm.locationAddress.trim();
 
-    this.taskService.updateTask(this.editorForm.id, {
+    await this.taskService.updateTaskWithBackend(this.editorForm.id, {
       title,
       description: description || undefined,
       estimatedDurationMinutes: duration,

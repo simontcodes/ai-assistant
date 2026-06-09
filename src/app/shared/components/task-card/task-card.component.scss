@@ -2,6 +2,20 @@
   overflow: hidden;
 }
 
+.task-card.is-done {
+  opacity: 0.72;
+}
+
+.task-card.is-done .task-visual {
+  filter: grayscale(0.55);
+}
+
+.task-card.is-done .task-head h3 {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(96, 108, 132, 0.5);
+}
+
 .task-visual {
   height: 134px;
 }
@@ -50,6 +64,11 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.task-card.is-done .badge {
+  background: #eef7f1;
+  color: #4c8d60;
 }
 
 .task-meta {

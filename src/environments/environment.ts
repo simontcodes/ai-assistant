@@ -12,6 +12,10 @@ export const environment = {
   google: {
     webClientId: '',
   },
+  backend: {
+    apiBaseUrl: 'http://localhost:3000/api',
+    androidApiBaseUrl: 'http://10.0.2.2:3000/api',
+  },
 };
 
 /*

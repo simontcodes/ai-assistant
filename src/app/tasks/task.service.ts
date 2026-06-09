@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Task } from '../shared/models/domain.models';
+import { BackendApiService } from '../shared/services/backend-api.service';
 
 type CreateTaskInput = Omit<Task, 'id' | 'createdAt' | 'updatedAt' | 'status'> & {
   status?: Task['status'];
@@ -16,6 +17,18 @@ export class TaskService {
 
   readonly tasks$ = this.tasksSubject.asObservable();
 
+  constructor(@Optional() private readonly backendApiService?: BackendApiService) {}
+
+  async syncFromBackend(): Promise<Task[]> {
+    if (!this.backendApiService) {
+      return this.getAllTasks();
+    }
+
+    const tasks = await this.backendApiService.getTasks();
+    this.persist(tasks);
+    return tasks;
+  }
+
   createTask(taskInput: CreateTaskInput): Task {
     const now = new Date().toISOString();
     const task: Task = {
@@ -27,6 +40,12 @@ export class TaskService {
     };
 
     const next = [task, ...this.tasksSubject.value];
+    this.persist(next);
+    return task;
+  }
+
+  importTask(task: Task): Task {
+    const next = [task, ...this.tasksSubject.value.filter((item) => item.id !== task.id)];
     this.persist(next);
     return task;
   }
@@ -53,8 +72,26 @@ export class TaskService {
     return updatedTask;
   }
 
+  async updateTaskWithBackend(taskId: string, updates: Partial<Task>): Promise<Task | null> {
+    if (!this.backendApiService) {
+      return this.updateTask(taskId, updates);
+    }
+
+    try {
+      const task = await this.backendApiService.updateTask(taskId, updates);
+      return this.importTask(task);
+    } catch (error) {
+      console.warn('Backend task update failed. Updating local task only.', error);
+      return this.updateTask(taskId, updates);
+    }
+  }
+
   markTaskDone(taskId: string): Task | null {
     return this.updateTask(taskId, { status: 'done' });
+  }
+
+  markTaskDoneWithBackend(taskId: string): Promise<Task | null> {
+    return this.updateTaskWithBackend(taskId, { status: 'done' });
   }
 
   getPendingTasks(): Task[] {

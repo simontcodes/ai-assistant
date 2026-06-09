@@ -1,52 +1,77 @@
-<ion-content [fullscreen]="true" class="screen-shell">
+<ion-content
+  [fullscreen]="true"
+  [scrollEvents]="true"
+  class="screen-shell"
+  (ionScroll)="revealHistoryTemporarily()"
+  (wheel)="revealHistoryTemporarily()"
+  (touchmove)="revealHistoryTemporarily()"
+>
   <div class="app-page assistant-page">
     <header class="topbar">
-      <div>
-        <p class="topbar-kicker">AI Assistant</p>
-        <h1>{{ assistantProfile.name }}</h1>
+      <div class="topbar-identity">
+        <app-assistant-avatar [name]="assistantProfile.name" [state]="avatarState" size="sm"></app-assistant-avatar>
+        <div>
+          <p class="topbar-kicker">{{ avatarState | titlecase }}</p>
+          <h1>{{ assistantProfile.name }}</h1>
+        </div>
       </div>
-      <ion-button fill="clear" color="dark" aria-label="Assistant options">
-        <ion-icon name="ellipsis-vertical"></ion-icon>
-      </ion-button>
+      <button type="button" class="sync-pill" (click)="sendPrompt('What can I do now?')" [disabled]="isSending">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        What fits now?
+      </button>
     </header>
 
-    <section class="character-stage soft-card">
-      <div class="stage-copy">
-        <p class="page-label">{{ avatarState | titlecase }}</p>
-        <h2>What should we make fit?</h2>
-        <p>Drop in a task, ask for a gap, or update what matters today.</p>
+    <section *ngIf="showQuickActions" class="empty-intro">
+      <div>
+        <h1>{{ assistantProfile.name }}</h1>
+        <p>Tell me a task or ask what fits into your current gap.</p>
       </div>
-      <app-assistant-avatar [name]="assistantProfile.name" [state]="avatarState"></app-assistant-avatar>
+      <div class="prompt-row">
+        <button type="button" class="prompt-chip" (click)="usePrompt('add todo reply to email high priority 15 minutes remote')">
+          Add task
+        </button>
+        <button type="button" class="prompt-chip" (click)="sendPrompt('What can I do now?')" [disabled]="isSending">Suggest now</button>
+      </div>
     </section>
 
-    <div class="prompt-row">
-      <button type="button" class="prompt-chip" (click)="usePrompt('add todo reply to email high priority 15 minutes remote')">Quick task</button>
-      <button type="button" class="prompt-chip" (click)="usePrompt('What can I do now?')">What fits now?</button>
-      <button type="button" class="prompt-chip" (click)="usePrompt('make that high priority')">Update last task</button>
-    </div>
+    <section class="up-next-card soft-card">
+      <div class="up-next-card__icon">
+        <ion-icon
+          [name]="upNextItem?.source === 'task' ? 'checkbox-outline' : upNextItem ? 'calendar-clear-outline' : 'time-outline'"
+        ></ion-icon>
+      </div>
+      <div class="up-next-card__body">
+        <p>Up next</p>
+        <h2>{{ isLoadingUpNext ? 'Checking next item...' : upNextItem?.title || 'Nothing confirmed next' }}</h2>
+        <div class="up-next-card__meta" *ngIf="upNextItem">
+          <span>{{ formatItemTime(upNextItem) }}</span>
+          <span>{{ upNextItem.meta }}</span>
+          <span *ngIf="upNextItem.location">{{ upNextItem.location }}</span>
+        </div>
+      </div>
+    </section>
 
     <section class="message-list">
-      <app-chat-message
-        *ngFor="let message of messages"
-        [message]="message"
-        (suggestionAction)="handleSuggestionAction($event)"
-      ></app-chat-message>
+      <div
+        *ngFor="let message of visibleMessages; trackBy: trackByMessageId"
+        @messageReveal
+        class="message-frame"
+      >
+        <app-chat-message
+          [message]="message"
+          (suggestionAction)="handleSuggestionAction($event)"
+        ></app-chat-message>
+      </div>
     </section>
   </div>
 
   <div class="fixed-stack">
     <section class="composer soft-card">
-      <button type="button" class="composer-icon" aria-label="Add attachment">
-        <ion-icon name="add-circle-outline"></ion-icon>
-      </button>
       <ion-textarea
         [(ngModel)]="draftMessage"
         auto-grow="true"
-        placeholder="Type your message..."
+        placeholder="Message Milo..."
       ></ion-textarea>
-      <button type="button" class="composer-icon" aria-label="Voice input">
-        <ion-icon name="mic-outline"></ion-icon>
-      </button>
       <button type="button" class="send-btn" aria-label="Send message" (click)="sendMessage()" [disabled]="!draftMessage.trim() || isSending">
         <ion-icon name="send"></ion-icon>
       </button>

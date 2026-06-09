@@ -8,4 +8,8 @@ export const environment = {
   google: {
     webClientId: '',
   },
+  backend: {
+    apiBaseUrl: '',
+    androidApiBaseUrl: '',
+  },
 };

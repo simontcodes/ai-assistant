@@ -8,7 +8,23 @@
       </div>
     </header>
 
-    <div class="filters">
+    <div class="filters filters--primary" aria-label="Task status filters">
+      <button
+        type="button"
+        [class.active]="selectedStatusFilter === 'pending'"
+        (click)="selectedStatusFilter = 'pending'"
+      >
+        Pending
+      </button>
+      <button type="button" [class.active]="selectedStatusFilter === 'done'" (click)="selectedStatusFilter = 'done'">
+        Done
+      </button>
+      <button type="button" [class.active]="selectedStatusFilter === 'all'" (click)="selectedStatusFilter = 'all'">
+        All
+      </button>
+    </div>
+
+    <div class="filters filters--secondary" aria-label="Task detail filters">
       <button type="button" [class.active]="selectedFilter === 'all'" (click)="selectedFilter = 'all'">All</button>
       <button type="button" [class.active]="selectedFilter === 'high'" (click)="selectedFilter = 'high'">High Priority</button>
       <button type="button" [class.active]="selectedFilter === 'medium'" (click)="selectedFilter = 'medium'">Medium</button>

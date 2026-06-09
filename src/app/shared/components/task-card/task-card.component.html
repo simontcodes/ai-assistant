@@ -1,4 +1,4 @@
-<article class="task-card soft-card" [class]="'task-card ' + visualClass">
+<article class="task-card soft-card" [class]="'task-card ' + visualClass" [class.is-done]="task.status === 'done'">
   <div class="task-visual"></div>
   <div class="task-body">
     <div class="task-head">

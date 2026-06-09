@@ -25,8 +25,15 @@
 .filters {
   display: flex;
   gap: 10px;
-  margin-bottom: 18px;
   overflow-x: auto;
+}
+
+.filters--primary {
+  margin-bottom: 10px;
+}
+
+.filters--secondary {
+  margin-bottom: 18px;
 }
 
 .filters button {
@@ -43,6 +50,16 @@
 .filters button.active {
   background: var(--app-accent);
   color: #fff;
+}
+
+.filters--secondary button {
+  min-height: 34px;
+  padding: 0 13px;
+  font-size: 13px;
+}
+
+.filters--secondary button.active {
+  background: #273044;
 }
 
 .task-list {

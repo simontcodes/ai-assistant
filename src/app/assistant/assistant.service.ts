@@ -13,6 +13,7 @@ import { TaskExtractionService } from '../tasks/task-extraction.service';
 import { TaskService } from '../tasks/task.service';
 import { AssistantIntentService } from './assistant-intent.service';
 import { SuggestionAction } from '../shared/components/suggestion-card/suggestion-card.component';
+import { BackendApiService } from '../shared/services/backend-api.service';
 
 const STORAGE_KEY = 'ai-day-assistant.messages.v1';
 
@@ -35,6 +36,7 @@ export class AssistantService {
     private readonly preferencesService: PreferencesService,
     private readonly knownLocationService: KnownLocationService,
     private readonly locationService: LocationService,
+    private readonly backendApiService: BackendApiService,
   ) {
     if (this.messagesSubject.value.length === 0) {
       this.appendMessage({
@@ -114,6 +116,11 @@ export class AssistantService {
   }
 
   private async handleCreateTask(message: string): Promise<void> {
+    const backendTask = await this.tryCreateTaskWithBackend(message);
+    if (backendTask) {
+      return;
+    }
+
     const extracted = await this.taskExtractionService.extractTaskFromMessage(message);
     const task = this.taskService.createTask(extracted);
     this.lastReferencedTaskId = task.id;
@@ -127,7 +134,34 @@ export class AssistantService {
     });
   }
 
+  private async tryCreateTaskWithBackend(message: string): Promise<boolean> {
+    try {
+      const response = await this.backendApiService.postAssistantMessage(message);
+
+      if (response.task) {
+        const task = this.taskService.importTask(response.task);
+        this.lastReferencedTaskId = task.id;
+      }
+
+      this.appendMessage({
+        role: 'assistant',
+        content: response.reply || 'I handled that.',
+      });
+
+      return true;
+    } catch (error) {
+      console.warn('Backend assistant request failed. Falling back to local task extraction.', error);
+      return false;
+    }
+  }
+
   private async handleSuggestionRequest(): Promise<void> {
+    try {
+      await this.taskService.syncFromBackend();
+    } catch (error) {
+      console.warn('Backend task sync failed before suggestions. Using locally saved tasks.', error);
+    }
+
     const preferences = this.preferencesService.getPreferences();
     const currentLocation = await this.locationService.getCurrentLocation();
     const knownLocations = this.knownLocationService.getKnownLocations();
