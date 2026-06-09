@@ -111,6 +111,15 @@ ion-input {
   opacity: 0.55;
 }
 
+.setting-note {
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
 .setting-error {
   color: #bf3d2f;
 }
@@ -120,9 +129,57 @@ ion-input {
   min-height: 52px;
   border: 0;
   border-radius: 16px;
-  background: #fff;
-  color: var(--app-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--app-accent);
+  color: #fff;
   font: inherit;
   font-weight: 800;
   box-shadow: var(--app-shadow-soft);
+  transform: translateY(0);
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.save-button ion-icon {
+  font-size: 20px;
+}
+
+.save-button:disabled {
+  background: #fff;
+  color: var(--app-text-muted);
+  box-shadow: none;
+  opacity: 0.62;
+}
+
+.save-button:not(:disabled):active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.save-button--saved {
+  animation: saved-pulse 520ms ease;
+  background: #1f9d63;
+}
+
+@keyframes saved-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: var(--app-shadow-soft);
+  }
+
+  45% {
+    transform: scale(1.025);
+    box-shadow: 0 18px 36px rgba(31, 157, 99, 0.22);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: var(--app-shadow-soft);
+  }
 }

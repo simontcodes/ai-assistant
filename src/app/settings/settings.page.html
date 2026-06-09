@@ -74,21 +74,21 @@
       <article class="setting-row setting-row--stack soft-card">
         <div>
           <h3>Google Calendar</h3>
-          <p>{{ googleSession?.email || 'Not connected' }}</p>
+          <p>
+            {{
+              googleSession?.email ||
+                (isGoogleCalendarConfigured ? 'Not connected' : 'Google sign-in is not configured for this build')
+            }}
+          </p>
         </div>
-        <ion-input
-          [(ngModel)]="googleWebClientId"
-          autocomplete="off"
-          placeholder="Google Web Client ID"
-        ></ion-input>
         <div class="setting-actions">
           <button
             type="button"
             class="setting-action setting-action--primary"
             (click)="connectGoogleCalendar()"
-            [disabled]="isConnectingGoogle || !googleWebClientId.trim()"
+            [disabled]="isConnectingGoogle || !isGoogleCalendarConfigured"
           >
-            {{ isConnectingGoogle ? 'Connecting...' : googleSession ? 'Reconnect' : 'Connect' }}
+            {{ googleConnectButtonLabel }}
           </button>
           <button
             *ngIf="googleSession"
@@ -99,6 +99,9 @@
             Disconnect
           </button>
         </div>
+        <p *ngIf="!isGoogleCalendarConfigured" class="setting-note">
+          Google Calendar connection is disabled until this build is configured with Google sign-in.
+        </p>
         <p *ngIf="googleAuthError" class="setting-error">{{ googleAuthError }}</p>
       </article>
 
@@ -111,7 +114,16 @@
       </article>
     </section>
 
-    <button type="button" class="save-button" (click)="save()">Save changes</button>
+    <button
+      type="button"
+      class="save-button"
+      [class.save-button--saved]="isShowingSavedFeedback"
+      (click)="save()"
+      [disabled]="!hasUnsavedChanges"
+    >
+      <ion-icon [name]="isShowingSavedFeedback ? 'checkmark-circle-outline' : 'save-outline'"></ion-icon>
+      {{ saveButtonLabel }}
+    </button>
   </div>
 
   <div class="fixed-stack">

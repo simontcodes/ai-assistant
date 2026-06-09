@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserPreferences } from '../shared/models/domain.models';
 import { OPENAI_API_KEY_STORAGE_KEY } from '../shared/constants/openai-config';
 import { PreferencesService } from './preferences.service';
@@ -10,13 +10,16 @@ import { GoogleAuthService, GoogleCalendarAuthSession } from '../calendar/google
   styleUrls: ['./settings.page.scss'],
   standalone: false,
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage implements OnInit, OnDestroy {
+  private savedStateSnapshot = '';
+  private saveFeedbackTimer: ReturnType<typeof setTimeout> | undefined;
+
   preferences: UserPreferences;
   openAiApiKey = '';
-  googleWebClientId = '';
   googleSession: GoogleCalendarAuthSession | null;
   googleAuthError = '';
   isConnectingGoogle = false;
+  saveState: 'idle' | 'saved' = 'idle';
 
   constructor(
     private readonly preferencesService: PreferencesService,
@@ -24,15 +27,53 @@ export class SettingsPage implements OnInit {
   ) {
     this.preferences = { ...this.preferencesService.getPreferences() };
     this.openAiApiKey = localStorage.getItem(OPENAI_API_KEY_STORAGE_KEY) ?? '';
-    this.googleWebClientId = this.googleAuthService.getWebClientId();
     this.googleSession = this.googleAuthService.getSession();
+    this.savedStateSnapshot = this.currentSettingsSnapshot();
   }
 
   ngOnInit(): void {
     this.googleSession = this.googleAuthService.getSession();
   }
 
+  ngOnDestroy(): void {
+    if (this.saveFeedbackTimer) {
+      clearTimeout(this.saveFeedbackTimer);
+    }
+  }
+
+  get isGoogleCalendarConfigured(): boolean {
+    return Boolean(this.googleAuthService.getWebClientId());
+  }
+
+  get googleConnectButtonLabel(): string {
+    if (!this.isGoogleCalendarConfigured) {
+      return 'Unavailable';
+    }
+
+    if (this.isConnectingGoogle) {
+      return 'Connecting...';
+    }
+
+    return this.googleSession ? 'Reconnect' : 'Connect';
+  }
+
+  get hasUnsavedChanges(): boolean {
+    return this.currentSettingsSnapshot() !== this.savedStateSnapshot;
+  }
+
+  get isShowingSavedFeedback(): boolean {
+    return this.saveState === 'saved' && !this.hasUnsavedChanges;
+  }
+
+  get saveButtonLabel(): string {
+    return this.isShowingSavedFeedback ? 'Saved' : 'Save changes';
+  }
+
   save(): void {
+    if (!this.hasUnsavedChanges) {
+      return;
+    }
+
     this.preferencesService.updatePreferences(this.preferences);
     const trimmedApiKey = this.openAiApiKey.trim();
 
@@ -42,13 +83,14 @@ export class SettingsPage implements OnInit {
       localStorage.removeItem(OPENAI_API_KEY_STORAGE_KEY);
     }
 
-    this.googleAuthService.saveWebClientId(this.googleWebClientId);
+    this.openAiApiKey = trimmedApiKey;
+    this.savedStateSnapshot = this.currentSettingsSnapshot();
+    this.showSavedFeedback();
   }
 
   async connectGoogleCalendar(): Promise<void> {
     this.googleAuthError = '';
     this.isConnectingGoogle = true;
-    this.googleAuthService.saveWebClientId(this.googleWebClientId);
 
     try {
       this.googleSession = await this.googleAuthService.signIn();
@@ -63,5 +105,28 @@ export class SettingsPage implements OnInit {
     this.googleAuthError = '';
     await this.googleAuthService.signOut();
     this.googleSession = null;
+  }
+
+  private currentSettingsSnapshot(): string {
+    return JSON.stringify({
+      preferences: {
+        ...this.preferences,
+        minimumUsefulGapMinutes: Number(this.preferences.minimumUsefulGapMinutes) || 0,
+      },
+      openAiApiKey: this.openAiApiKey.trim(),
+    });
+  }
+
+  private showSavedFeedback(): void {
+    this.saveState = 'saved';
+
+    if (this.saveFeedbackTimer) {
+      clearTimeout(this.saveFeedbackTimer);
+    }
+
+    this.saveFeedbackTimer = setTimeout(() => {
+      this.saveState = 'idle';
+      this.saveFeedbackTimer = undefined;
+    }, 1400);
   }
 }

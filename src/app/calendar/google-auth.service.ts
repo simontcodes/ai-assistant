@@ -5,7 +5,6 @@ import { environment } from '../../environments/environment';
 import {
   GOOGLE_AUTH_SESSION_STORAGE_KEY,
   GOOGLE_CALENDAR_READONLY_SCOPE,
-  GOOGLE_WEB_CLIENT_ID_STORAGE_KEY,
 } from '../shared/constants/google-auth-config';
 
 type CapgoGoogleState = {
@@ -78,19 +77,7 @@ export class GoogleAuthService {
   }
 
   getWebClientId(): string {
-    return environment.google.webClientId || localStorage.getItem(GOOGLE_WEB_CLIENT_ID_STORAGE_KEY) || '';
-  }
-
-  saveWebClientId(clientId: string): void {
-    const trimmedClientId = clientId.trim();
-
-    if (trimmedClientId) {
-      localStorage.setItem(GOOGLE_WEB_CLIENT_ID_STORAGE_KEY, trimmedClientId);
-    } else {
-      localStorage.removeItem(GOOGLE_WEB_CLIENT_ID_STORAGE_KEY);
-    }
-
-    this.initializedClientId = null;
+    return environment.google.webClientId;
   }
 
   async signIn(): Promise<GoogleCalendarAuthSession> {
@@ -147,7 +134,7 @@ export class GoogleAuthService {
   private async initialize(): Promise<void> {
     const webClientId = this.getWebClientId();
     if (!webClientId) {
-      throw new Error('Add a Google Web Client ID before connecting Google Calendar.');
+      throw new Error('Google Calendar sign-in is not configured for this build.');
     }
 
     if (this.initializedClientId === webClientId) {
